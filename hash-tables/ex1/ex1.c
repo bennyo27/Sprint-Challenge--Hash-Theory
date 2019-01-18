@@ -15,14 +15,20 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
   for (int i = 0; i < length; i++)
   {
     int index_2 = hash_table_retrieve(ht, limit - weights[i]);
+    // as per read me -1 should be given back when matched?
     if (index_2 != -1)
     {
       answer->index_1 = i;
       answer->index_2 = index_2;
       return answer;
     }
+    else
+    {
+      hash_table_insert(ht, weights[i], i);
+    }
   }
-
+  // free
+  destroy_hash_table(ht);
   return NULL;
 }
 
